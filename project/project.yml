@@ -1,0 +1,39 @@
+{
+    drivers:{
+        #Create a modbus slave driver named my_slave
+        my_slave: {
+            uri: "modbus.async" ,
+            config: {
+                #log_level: 'all', #see all log messages for driver
+                type: 'serial.slave',
+                mode: 'ascii',
+                address: 1,
+                serial_port: {
+                    port_name: 'COM10',
+                    port_options: {
+                        baudrate: 9600,
+                        dataBits: 8,
+                        parity: 'none'
+                    }
+                }
+            }
+        }
+    },
+    tags: {    
+        "4x0001": {
+            defaultValue: 0,
+            #link to driver my_slave holding register 40001
+            driverinfo: { id: "my_slave", item: "n:0"}
+        },
+        "4x0002": {
+            defaultValue: 0,
+            #link to driver my_slave holding register 40002
+            driverinfo: { id: "my_slave", item: "n:1"}
+        },
+        "4x0002.0": {
+            defaultValue: 0,
+            #link to driver my_slave holding register 40002 bit 0
+            driverinfo: {id: "my_slave", item: "n:1.0"}
+        }
+    }
+}
